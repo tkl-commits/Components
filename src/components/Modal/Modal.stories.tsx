@@ -4,7 +4,7 @@ import ModalComponent from "./ModalComponent";
 import { ModalComponentProps } from "./ModalComponentProps.model";
 
 export default {
-  title: "Components/ModalComponent",
+  title: "Components/Modal",
   component: ModalComponent,
 } as Meta;
 
