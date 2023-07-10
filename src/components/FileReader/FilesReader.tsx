@@ -60,6 +60,7 @@ const FilesReader: React.FunctionComponent<FilesReaderProps> = (props) => {
         p="5px"
         borderColor="red"
         border="2px"
+        cursor="pointer"
         borderRadius="5px"
         h="150px"
         borderStyle="dashed"
