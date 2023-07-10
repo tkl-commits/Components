@@ -1,7 +1,7 @@
 export type ModalComponentProps = {
   modalButton: string;
   modalTitle: string;
-  modalBody: string;
+  modalMessage: string;
   execute: string;
   cancel: string;
   buttonTheme: string;

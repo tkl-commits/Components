@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Button,
   Modal,
@@ -9,15 +9,16 @@ import {
   ModalHeader,
   ModalOverlay,
   useDisclosure,
-} from '@chakra-ui/react';
-import { ModalComponentProps } from './ModalComponentProps.model';
+} from "@chakra-ui/react";
+import { ModalComponentProps } from "./ModalComponentProps.model";
 
-
-const ModalComponent: React.FunctionComponent<ModalComponentProps> = (props) => {
+const ModalComponent: React.FunctionComponent<ModalComponentProps> = (
+  props
+) => {
   const {
     modalButton,
     modalTitle,
-    modalBody,
+    modalMessage,
     execute,
     cancel,
     buttonTheme,
@@ -27,9 +28,7 @@ const ModalComponent: React.FunctionComponent<ModalComponentProps> = (props) => 
 
   return (
     <>
-      <Button
-        colorScheme={buttonTheme}
-        onClick={onOpen}>
+      <Button colorScheme={buttonTheme} onClick={onOpen}>
         {modalButton}
       </Button>
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -37,15 +36,15 @@ const ModalComponent: React.FunctionComponent<ModalComponentProps> = (props) => 
         <ModalContent>
           <ModalHeader>{modalTitle}</ModalHeader>
           <ModalCloseButton />
-          <ModalBody>
-            {modalBody}
-          </ModalBody>
+          <ModalBody>{modalMessage}</ModalBody>
 
           <ModalFooter>
-            <Button colorScheme='red' mr={3} onClick={onClose}>
+            <Button colorScheme="red" mr={3} onClick={onClose}>
               {cancel}
             </Button>
-            <Button variant='ghost' onClick={modalFunction}>{execute}</Button>
+            <Button variant="ghost" onClick={modalFunction}>
+              {execute}
+            </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

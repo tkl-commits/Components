@@ -22,7 +22,7 @@ const ModalComponentTemp: Story<ModalComponentProps> = (args) => {
 export const Modal = ModalComponentTemp.bind({});
 Modal.args = {
   modalButton: "Open Modal",
-  modalBody: "Are you sure you want to continue this action",
+  modalMessage: "Are you sure you want to continue this action",
   cancel: "No",
   execute: "Yes",
   buttonTheme: "blue",

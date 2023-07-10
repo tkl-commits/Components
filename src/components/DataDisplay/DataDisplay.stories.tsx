@@ -146,7 +146,7 @@ const DataDisplayTemp: Story = () => {
                     <ModalComponent
                       modalButton="Delete"
                       modalTitle="Delete"
-                      modalBody="Are you sure you want to continue this action"
+                      modalMessage="Are you sure you want to continue this action"
                       execute="Yes"
                       cancel="No"
                       buttonTheme="red"
