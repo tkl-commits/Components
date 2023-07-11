@@ -1,21 +1,8 @@
 import React, { ChangeEvent, useState } from "react";
 import { Meta, Story } from "@storybook/react";
-import {
-  Container,
-  TableContainer,
-  Table,
-  TableCaption,
-  Thead,
-  Tr,
-  Th,
-  Tbody,
-  Td,
-  Input,
-  Button,
-} from "@chakra-ui/react";
+import { Container } from "@chakra-ui/react";
 import FilesReader from "../FileReader/FilesReader";
-import { Person } from "./DataDisplayProps.model";
-import ModalComponent from "../Modal/ModalComponent";
+import DynamicTable from "../DynamicTable/DynamicTable";
 
 export default {
   title: "Components/DataDisplay",
@@ -57,58 +44,15 @@ const DataDisplayTemp: Story = () => {
     <>
       <Container pt={10} maxW="fit-content" centerContent>
         <FilesReader onComplete={(data: any[]) => setList(data)} />
-        <TableContainer pt={10} maxW="100%">
-          <Table>
-            <TableCaption>just an ordinary table 😉</TableCaption>
-            <Thead>
-              <Tr>
-                {tableHeaders.map((header) => (
-                  <Th key={header}>{header}</Th>
-                ))}
-                <Th>Action</Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {list?.map((data: any, i: number) => (
-                <Tr key={i}>
-                  {tableHeaders.map((header) => (
-                    <Td key={header}>
-                      {editedRowIndex === i ? (
-                        <Input
-                          placeholder={header}
-                          value={data[header]}
-                          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                            handleInputChange(e, header as keyof any)
-                          }
-                        />
-                      ) : (
-                        <span>{data[header]}</span>
-                      )}
-                    </Td>
-                  ))}
-                  <Td>
-                    {editedRowIndex === i ? (
-                      <Button onClick={() => updatePerson(i)}>Update</Button>
-                    ) : (
-                      <Button onClick={() => editPerson(i)}>Edit</Button>
-                    )}
-                  </Td>
-                  <Td>
-                    <ModalComponent
-                      modalButton="Delete"
-                      modalTitle="Delete"
-                      modalMessage="Are you sure you want to continue this action"
-                      execute="Yes"
-                      cancel="No"
-                      buttonTheme="red"
-                      modalFunction={() => deletePerson(i)}
-                    />
-                  </Td>
-                </Tr>
-              ))}
-            </Tbody>
-          </Table>
-        </TableContainer>
+        <DynamicTable
+          data={list}
+          editedRowIndex={editedRowIndex}
+          deleteRow={deletePerson}
+          editData={editPerson}
+          handleInputChange={handleInputChange}
+          updateData={updatePerson}
+          showActions={false}
+        />
       </Container>
     </>
   );
