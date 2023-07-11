@@ -22,14 +22,8 @@ export default {
 } as Meta;
 
 const DataDisplayTemp: Story = () => {
-  const [list, setList] = useState<Person[]>([]);
+  const [list, setList] = useState<any[]>([]);
   const [editedRowIndex, setEditedRowIndex] = useState<number>(-1);
-  const [updatedValues, setUpdatedValues] = useState<Person>({
-    firstName: "",
-    lastName: "",
-    email: "",
-    dateOfBirth: "",
-  });
 
   const deletePerson = (index: number) => {
     const updatedList = [...list];
@@ -39,102 +33,59 @@ const DataDisplayTemp: Story = () => {
 
   const editPerson = (index: number) => {
     setEditedRowIndex(index);
-    setUpdatedValues(list[index]);
   };
 
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement>,
-    field: keyof Person
+    field: keyof any
   ) => {
-    setUpdatedValues((prevValues) => ({
-      ...prevValues,
+    const updatedList = [...list];
+    updatedList[editedRowIndex] = {
+      ...updatedList[editedRowIndex],
       [field]: e.target.value,
-    }));
+    };
+    setList(updatedList);
   };
 
   const updatePerson = (index: number) => {
-    const updatedList = [...list];
-    updatedList[index] = { ...updatedValues };
-    setList(updatedList);
     setEditedRowIndex(-1);
-    setUpdatedValues({
-      firstName: "",
-      lastName: "",
-      email: "",
-      dateOfBirth: "",
-    });
   };
+
+  const tableHeaders = list.length > 0 ? Object.keys(list[0]) : [];
+
   return (
     <>
       <Container pt={10} maxW="fit-content" centerContent>
-        <FilesReader onComplete={(data: Person[]) => setList(data)} />
+        <FilesReader onComplete={(data: any[]) => setList(data)} />
         <TableContainer pt={10} maxW="100%">
           <Table>
             <TableCaption>just an ordinary table 😉</TableCaption>
             <Thead>
               <Tr>
-                <Th>First Name</Th>
-                <Th>Last Name</Th>
-                <Th>Date of Birth</Th>
-                <Th>Email</Th>
+                {tableHeaders.map((header) => (
+                  <Th key={header}>{header}</Th>
+                ))}
                 <Th>Action</Th>
               </Tr>
             </Thead>
             <Tbody>
-              {list?.map((data: Person, i: number) => (
-                <Tr key={data?.firstName + data?.lastName}>
-                  <Td>
-                    {editedRowIndex === i ? (
-                      <Input
-                        placeholder="first name"
-                        value={updatedValues.firstName}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                          handleInputChange(e, "firstName")
-                        }
-                      />
-                    ) : (
-                      <span>{data?.firstName}</span>
-                    )}
-                  </Td>
-                  <Td>
-                    {editedRowIndex === i ? (
-                      <Input
-                        placeholder="last name"
-                        value={updatedValues.lastName}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                          handleInputChange(e, "lastName")
-                        }
-                      />
-                    ) : (
-                      <span>{data?.lastName}</span>
-                    )}
-                  </Td>
-                  <Td>
-                    {editedRowIndex === i ? (
-                      <Input
-                        placeholder="date Of birth"
-                        value={updatedValues.dateOfBirth}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                          handleInputChange(e, "dateOfBirth")
-                        }
-                      />
-                    ) : (
-                      <span>{data?.dateOfBirth}</span>
-                    )}
-                  </Td>
-                  <Td>
-                    {editedRowIndex === i ? (
-                      <Input
-                        placeholder="email"
-                        value={updatedValues.email}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                          handleInputChange(e, "email")
-                        }
-                      />
-                    ) : (
-                      <span>{data?.email}</span>
-                    )}
-                  </Td>
+              {list?.map((data: any, i: number) => (
+                <Tr key={i}>
+                  {tableHeaders.map((header) => (
+                    <Td key={header}>
+                      {editedRowIndex === i ? (
+                        <Input
+                          placeholder={header}
+                          value={data[header]}
+                          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                            handleInputChange(e, header as keyof any)
+                          }
+                        />
+                      ) : (
+                        <span>{data[header]}</span>
+                      )}
+                    </Td>
+                  ))}
                   <Td>
                     {editedRowIndex === i ? (
                       <Button onClick={() => updatePerson(i)}>Update</Button>
